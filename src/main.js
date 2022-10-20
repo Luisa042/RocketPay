@@ -45,3 +45,33 @@ const expirationDatePattern = {
   },
 }
 const expirationDateMasked = IMask(expirationDate, expirationDatePattern)
+
+const cardNumber = document.getElementById('card-number')
+const cardNumberPattern = {
+  mask: [
+    {
+      cardType: 'default',
+      mask: '0000 0000 0000 0000',
+    },
+    {
+      cardType: 'visa',
+      regex: /^4\d{0,15}/,
+      mask: '0000 0000 0000 0000',
+    },
+    {
+      cardType: 'mastercard',
+      regex: /(^5[1-5]\d{0,2}|^22[2-9]\d|^2[3-7]\d{0,2})\d{0,12}/,
+      mask: '0000 0000 0000 0000',
+    },
+  ],
+  dispatch: function (appended, dynamicMasked) {
+    const number = (dynamicMasked.value + appended).replace(/\D/g, '')
+
+    const maskRegEx = dynamicMasked.compiledMasks.find((item) => {
+      return number.match(item.regex)
+    })
+
+    return maskRegEx
+  },
+}
+const cardNumberMasked = IMask(cardNumber, cardNumberPattern)
