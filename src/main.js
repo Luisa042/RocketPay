@@ -91,3 +91,31 @@ cardHolder.addEventListener('input', () => {
   ccHolder.innerText =
     cardHolder.value.length === 0 ? 'FULANO DA SILVA' : cardHolder.value
 })
+
+function updateSecurityCode(code) {
+  const ccSecurity = document.querySelector('.cc-security .value')
+  ccSecurity.innerText = code.length === 0 ? '123' : code
+}
+
+securityCodeMasked.on('accept', () =>
+  updateSecurityCode(securityCodeMasked.value)
+)
+
+function updateCardNumber(cardNumber) {
+  const ccNumber = document.querySelector('.cc-number')
+  ccNumber.innerText =
+    cardNumber.length === 0 ? '1234 5678 9012 3456' : cardNumber
+}
+
+cardNumberMasked.on('accept', () => {
+  const cardType = cardNumberMasked.masked.currentMask.cardType
+  setCardType(cardType)
+  updateCardNumber(cardNumberMasked.value)
+})
+
+function updateExpirationDate(date) {
+  const ccExpiration = document.querySelector('.cc-expiration .value')
+  ccExpiration.innerText = date.length === 0 ? '10/22' : date
+}
+
+expirationDateMasked.on('accept', () => updateExpirationDate(expirationDateMasked.value))
